@@ -6,7 +6,7 @@
 
 #include "../fsm/fsm.h"
 
-void fsm_debounce(int *input, int *state, int *variable) {
+void fsm_debounce(int input, int *state, int *variable) {
 
 }
 
@@ -21,6 +21,10 @@ void fsm_lengkap(int mode_in, int set_in, int *state, int *variable) {
 /**
  * initialize all states
  */
-void fsm_init() {
+void fsm_debounce_init(int *state, int *variable) {
 
+}
+
+void fsm_jam_init(int *state, int *variable) {
+    *state = S_TIME_HOUR;
 }
