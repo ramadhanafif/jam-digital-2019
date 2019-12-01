@@ -42,71 +42,78 @@ void fsm_jam(int mode_clean, int set_clean, int *state, int *variable) {
 		if (set_clean)
 			next_state = S_DATE_HOUR;
 		break; 
-/*-----------------------------------------------*/
+/*--------------------------------------------------------*/
 	case S_TIME_HOUR:
-		if (mode_clean)
+		if (mode_clean){
 			next_state = S_TIME_HOUR;
-		
+			*variable++;
+		}
 		if (set_clean)
 			next_state = S_TIME_MINUTE;
 		break; 
 
 	case S_TIME_MINUTE:
-		if (mode_clean)
+		if (mode_clean){
 			next_state = S_TIME_MINUTE;
-		
+			*variable++;
+		}
 		if (set_clean)
 			next_state = S_TIME_DAY;
 		break; 
 
 	case S_TIME_DAY:
-		if (mode_clean)
+		if (mode_clean){
 			next_state = S_TIME_DAY;
-		
+			*variable++;
+		}
 		if (set_clean)
 			next_state = S_TIME_MONTH;
 		break; 
 
 	case S_TIME_YEAR:
-		if (mode_clean)
+		if (mode_clean){
 			next_state = S_TIME_YEAR;
-		
+			*variable++;
+		}
 		if (set_clean)
 			next_state = S_TIME;
 		break; 
 /*--------------------------------------------------------*/
 	case S_DATE_HOUR:
-		if (mode_clean)
+		if (mode_clean){
 			next_state = S_DATE_HOUR;
-		
+			*variable++;
+		}
 		if (set_clean)
 			next_state = S_DATE_MINUTE;
 		break; 
 
 	case S_DATE_MINUTE:
-		if (mode_clean)
+		if (mode_clean){
 			next_state = S_DATE_MINUTE;
-		
+			*variable++;
+		}
 		if (set_clean)
 			next_state = S_DATE_DAY;
 		break; 
 
 	case S_DATE_DAY:
-		if (mode_clean)
+		if (mode_clean){
 			next_state = S_DATE_DAY;
-		
+			*variable++;
+		}
 		if (set_clean)
 			next_state = S_DATE_MONTH;
 		break; 
 
 	case S_DATE_YEAR:
-		if (mode_clean)
+		if (mode_clean){
 			next_state = S_DATE_YEAR;
-		
+			*variable++;
+		}
 		if (set_clean)
 			next_state = S_DATE;
-		break; 
-	}
+		break;
 
 	//next state assignment
 	*state = next_state
@@ -114,14 +121,24 @@ void fsm_jam(int mode_clean, int set_clean, int *state, int *variable) {
 }
 
 void fsm_lengkap(int mode_in, int set_in, int *state, int *variable) {
+	int mode_counter;
+	int set_counter;
 
+	int mode_clean;
+	int set_clean;
+
+	fsm_debounce(mode_in,mode_clean,mode_counter);
+	fsm_debounce(set_in,set_clean,mode_counter);
+
+	fsm_jam(mode_clean,set_clean,state,variable);
+	
 }
 
 /**
  * initialize all states
  */
 void fsm_debounce_init(int *state, int *variable) {
-
+	*variable = 0;
 }
 
 void fsm_jam_init(int *state, int *variable) {
