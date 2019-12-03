@@ -2,10 +2,10 @@
 
 int* state;
 int mode_in, set_in, mode_evt, set_evt;
-int* year, month, date, hour, minute;
+int *year, *month, *date, *hour, *minute;
 
 // debounce counter
-int* mode_deb, set_deb;
+int *mode_deb, *set_deb;
 
 //pin definition
 #define MODE 16
@@ -80,5 +80,6 @@ void loop() {
       break;
   }
 
-
+  Serial.println()
+  vTaskDelay(1);
 }
