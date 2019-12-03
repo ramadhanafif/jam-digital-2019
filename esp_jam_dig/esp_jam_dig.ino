@@ -14,7 +14,11 @@ int *mode_deb, *set_deb;
 //null pointer
 #define kosong 0
 
-void setup() {
+
+void xsetup() {
+  //uart initialisation
+  Serial.begin(115200);
+
   //pin initialisation
   pinMode(MODE, INPUT_PULLUP);
   pinMode(SET, INPUT_PULLUP);
@@ -33,8 +37,7 @@ void setup() {
 
 }
 
-void loop() {
-
+void xloop() {
   mode_in = digitalRead(MODE);
   set_in = digitalRead(SET);
 
@@ -79,7 +82,29 @@ void loop() {
       fsm_lengkap(mode_in, set_in, state, yea);
       break;
   }
-
-  Serial.println();
-  delay(1);
 }
+
+
+void main_task (void* param){
+  TickType_t xLastWakeTime;
+  const TickType_t xFrequency = 10;
+
+  // Initialise the xLastWakeTime variable with the current time.
+  xLastWakeTime = xTaskGetTickCount();
+  xsetup();
+  for( ;; )
+  {
+    xloop();
+    // Wait for the next cycle.
+    Serial.println(*state);
+    vTaskDelayUntil( &xLastWakeTime, 10 );
+
+    // Perform action here.
+  }
+}
+
+void setup(){
+  xTaskCreate(main_task,"main",configMINIMAL_STACK_SIZE+100,NULL,0,NULL);
+}
+
+void loop(){}
