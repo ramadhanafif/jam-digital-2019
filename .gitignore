@@ -3,3 +3,5 @@
 *.d
 *.exe
 jam-test/.dep.inc
+esp_jam_dig/.DS_Store
+.DS_Store

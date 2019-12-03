@@ -13,7 +13,7 @@ void fsm_debounce(int input, int *state, int *variable) {
 
   if (*variable < 10)
   {
-    *variable++;
+    (*variable)++;
   }
   else //variable>10
   {
@@ -46,7 +46,7 @@ void fsm_jam(int mode_clean, int set_clean, int *state, int *variable) {
     case S_TIME_HOUR:
       if (mode_clean) {
         next_state = S_TIME_HOUR;
-        *variable++;
+        (*variable)++;
         if (*variable == 24)
           *variable = 0;
       }
@@ -57,7 +57,7 @@ void fsm_jam(int mode_clean, int set_clean, int *state, int *variable) {
     case S_TIME_MINUTE:
       if (mode_clean) {
         next_state = S_TIME_MINUTE;
-        *variable++;
+        (*variable)++;
         if (*variable == 60)
           *variable = 0;
       }
@@ -68,7 +68,7 @@ void fsm_jam(int mode_clean, int set_clean, int *state, int *variable) {
     case S_TIME_DAY:
       if (mode_clean) {
         next_state = S_TIME_DAY;
-        *variable++;
+        (*variable)++;
         if (*variable == 31)
           *variable = 0;
       }
@@ -79,7 +79,7 @@ void fsm_jam(int mode_clean, int set_clean, int *state, int *variable) {
     case S_TIME_YEAR:
       if (mode_clean) {
         next_state = S_TIME_YEAR;
-        *variable++;
+        (*variable)++;
       }
       if (set_clean)
         next_state = S_TIME;
@@ -88,7 +88,7 @@ void fsm_jam(int mode_clean, int set_clean, int *state, int *variable) {
     case S_DATE_HOUR:
       if (mode_clean) {
         next_state = S_DATE_HOUR;
-        *variable++;
+        (*variable)++;
         if (*variable == 24)
           *variable = 0;
       }
@@ -99,7 +99,7 @@ void fsm_jam(int mode_clean, int set_clean, int *state, int *variable) {
     case S_DATE_MINUTE:
       if (mode_clean) {
         next_state = S_DATE_MINUTE;
-        *variable++;
+        (*variable)++;
         if (*variable == 60)
           *variable = 0;
       }
@@ -110,7 +110,7 @@ void fsm_jam(int mode_clean, int set_clean, int *state, int *variable) {
     case S_DATE_DAY:
       if (mode_clean) {
         next_state = S_DATE_DAY;
-        *variable++;
+        (*variable)++;
         if (*variable == 32)
           *variable = 0;
       }
@@ -121,7 +121,7 @@ void fsm_jam(int mode_clean, int set_clean, int *state, int *variable) {
     case S_DATE_YEAR:
       if (mode_clean) {
         next_state = S_DATE_YEAR;
-        *variable++;
+        (*variable)++;
       }
       if (set_clean)
         next_state = S_DATE;
@@ -134,14 +134,14 @@ void fsm_jam(int mode_clean, int set_clean, int *state, int *variable) {
 }
 
 void fsm_lengkap(int mode_in, int set_in, int *state, int *variable) {
-  int mode_counter;
-  int set_counter;
+  int mode_counter = 0;
+  int set_counter = 0;
 
   int mode_clean;
   int set_clean;
 
-  fsm_debounce(mode_in, mode_clean, mode_counter);
-  fsm_debounce(set_in, set_clean, mode_counter);
+  fsm_debounce(mode_in, &mode_clean, &mode_counter);
+  fsm_debounce(set_in, &set_clean, &mode_counter);
 
   fsm_jam(mode_clean, set_clean, state, variable);
 
