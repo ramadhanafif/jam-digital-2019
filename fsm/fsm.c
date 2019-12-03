@@ -4,7 +4,7 @@
   and open the template in the editor.
 */
 
-#include "../fsm/fsm.h"
+#include "fsm.h"
 
 void fsm_debounce(int input, int *state, int *variable) {
   // increment variable
