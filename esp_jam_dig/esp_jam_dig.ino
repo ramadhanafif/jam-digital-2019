@@ -41,6 +41,8 @@ void xloop() {
   mode_in = (digitalRead(MODE) == 0);
   set_in = (digitalRead(SET) == 0);
 
+  Serial.print(mode_in);Serial.print(',');
+  Serial.println(set_in);
   switch (state)
   {
     case S_TIME:

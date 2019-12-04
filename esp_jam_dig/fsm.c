@@ -8,18 +8,19 @@
 
 int mode_counter = 0;
 int set_counter = 0;
+#define DEB_COUNT 100
 
 
 void fsm_debounce(int input, int *state, int *variable) {
   // increment variable
   // increment terjadi setiap 1 ms
-  // input dianggap berhenti bouncing setelah variable bernilai 10
+  // input dianggap berhenti bouncing setelah variable bernilai DEB_COUNT
 
-  if (*variable < 10)
+  if (*variable < DEB_COUNT)
   {
     (*variable)++;
   }
-  else //variable>10
+  else //variable>DEB_COUNT
   {
     if (input == 1)
       *state = 1;
