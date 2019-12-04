@@ -11,9 +11,8 @@ int mode_deb, set_deb;
 #define MODE 32
 #define SET 26
 
-//null pointer
-#define kosong 0
-
+//placebo pointer
+int * kosong = (int*)malloc(sizeof(int));
 
 void xsetup() {
   //uart initialisation
@@ -38,8 +37,9 @@ void xsetup() {
 }
 
 void xloop() {
-  mode_in = digitalRead(MODE);
-  set_in = digitalRead(SET);
+
+  mode_in = (digitalRead(MODE) == 0);
+  set_in = (digitalRead(SET) == 0);
 
   switch (state)
   {
@@ -81,35 +81,21 @@ void xloop() {
     case S_DATE_YEAR:
       fsm_lengkap(mode_in, set_in, &state, &yea);
       break;
+    default:
+      fsm_lengkap(mode_in, set_in, &state, kosong);
   }
 }
 
-//
-//void main_task (void* param) {
-//  TickType_t xLastWakeTime;
-//  const TickType_t xFrequency = 100;
-//
-//  // Initialise the xLastWakeTime variable with the current time.
-//  xLastWakeTime = xTaskGetTickCount();
-//  xsetup();
-//  for ( ;; )
-//  {
-//    xloop();
-//    // Wait for the next cycle.
-//    Serial.println(state);
-//    vTaskDelayUntil( &xLastWakeTime, xFrequency );
-//
-//    // Perform action here.
-//  }
-//}
 
 void setup() {
-  //  xTaskCreate(main_task, "main", configMINIMAL_STACK_SIZE + 100, NULL, 0, NULL);
   xsetup();
 }
+
 int t = millis();
+
 void loop() {
   xloop();
   Serial.println(state);
-  while(t+10>millis());
+  while (t + 10 > millis());
+  t = millis();
 }
