@@ -158,21 +158,16 @@ void fsm_jam(int mode_clean, int set_clean, int *state, int *variable) {
 }
 
 void fsm_lengkap(int mode_in, int set_in, int *state, int *variable) {
-  int mode_clean;
-  int set_clean;
+  int mode_clean = 0;
+  int set_clean = 0;
 
-  fsm_debounce(mode_in, &mode_clean, &mode_counter);
-  fsm_debounce(set_in, &set_clean, &set_counter);
+  if (mode_in)
+    fsm_debounce(mode_in, &mode_clean, &mode_counter);
+
+  else if (set_in)
+    fsm_debounce(set_in, &set_clean, &set_counter);
 
   fsm_jam(mode_clean, set_clean, state, variable);
-
-  //Reset
-  if (mode_clean)
-    mode_clean = 0;
-  if (set_clean)
-    set_clean = 0;
-  
-
 }
 
 /* Debouce counter reset */

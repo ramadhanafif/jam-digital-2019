@@ -11,7 +11,7 @@ int mode_deb, set_deb;
 #define MODE 32
 #define SET 26
 
-//placebo pointer
+//pointer kosong, untuk mempertahankan fungsi
 int * kosong = (int*)malloc(sizeof(int));
 
 void xsetup() {
@@ -41,8 +41,7 @@ void xloop() {
   mode_in = (digitalRead(MODE) == 0);
   set_in = (digitalRead(SET) == 0);
 
-  Serial.print(mode_in);Serial.print(',');
-  Serial.println(set_in);
+  Serial.print(mode_in); Serial.print(','); Serial.println(set_in);
   switch (state)
   {
     case S_TIME:
@@ -98,6 +97,6 @@ int t = millis();
 void loop() {
   xloop();
   Serial.println(state);
-  while (t + 10 > millis());
+  while (t + 100 > millis());
   t = millis();
 }
